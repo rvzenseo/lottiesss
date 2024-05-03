@@ -21,8 +21,29 @@ document.addEventListener('DOMContentLoaded', function () {
         `,
         data() {
             return {
-                animations: [] // You should load your animations data here
+                animations: [] // This array will be populated with animation data
             };
+        },
+        created() {
+            this.loadAnimations();
+        },
+        methods: {
+            loadAnimations() {
+                const animationFiles = [
+                    'animations/ani-1.json', 'animations/ani-2.json',
+                    'animations/ani-3.json', 'animations/ani-4.json',
+                    'animations/ani-5.json', 'animations/ani-6.json',
+                    'animations/ani-7.json', 'animations/ani-8.json'
+                ];
+                animationFiles.forEach(file => {
+                    fetch(file)
+                        .then(response => response.json())
+                        .then(data => {
+                            this.animations.push(data);
+                        })
+                        .catch(error => console.error('Error loading the animation:', error));
+                });
+            }
         }
     });
 
